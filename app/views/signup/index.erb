@@ -1,0 +1,26 @@
+<h1>Signup for The Songs site</h1>
+<form action="signup" method="post">
+    <ul>
+        <li>
+            <input type="text" placeholder="email" name="email" value="">
+        </li>
+        <li>
+            <input type="text" placeholder="password" name="password" value="">
+        </li>
+        <li>
+            <input type="submit" value="Signup">
+        </li>
+    </ul>
+</form>
+<% #binding.pry%>
+<% if @user && @user.errors.any? %>
+  <div>
+      <strong>Some issues with your signup, please fix them:</strong>
+      <ul>
+        <%# binding.pry %>
+        <% @user.errors.full_messages.each do |user| %>
+          <li><%= user %></li>
+        <% end %>
+      </ul>
+  </div>
+<% end %>
