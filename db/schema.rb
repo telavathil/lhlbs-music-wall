@@ -10,14 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711185641) do
+ActiveRecord::Schema.define(version: 20160711212724) do
 
   create_table "tracks", force: :cascade do |t|
-    t.string "song_title"
-    t.string "author"
-    t.string "url"
-    t.date   "created_at"
-    t.date   "updated_at"
+    t.string  "song_title"
+    t.string  "author"
+    t.string  "url"
+    t.date    "created_at"
+    t.date    "updated_at"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_tracks_on_user_id"
+  end
+
+  create_table "upvotes", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "track_id"
+    t.date    "created_at"
+    t.date    "updated_at"
   end
 
   create_table "users", force: :cascade do |t|

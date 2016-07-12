@@ -1,3 +1,19 @@
+<div class="container" class="valign">
+    <h1>Enter a Track</h1>
+    <form method="post" action = '/tracks'>
+    <ul>
+        <li>
+            <input type="text" placeholder="Song Title" name="email" value="<%= @track && @track.song_title%>">
+        </li>
+        <li>
+            <input type="text" placeholder="author" name="author" value="<%= @track && @track.author %>">
+            <input type="hidden" name="user_id" value="<%= @track && @track.user_id %>">
+        </li>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+         <i class="material-icons right">done</i>
+        </button>
+    </ul>
+    </form>
 <% if @track && @track.errors.any? %>
   <div>
     <strong>Some issues with your track, please fix them:</strong>
@@ -9,20 +25,4 @@
     </ul>
   </div>
 <% end %>
-<form method="post" action = '/tracks'>
-  <div>
-    <label>Song Title:</label>
-    <input type="text" name="song_title" value="<%= @track && @track.song_title%>">
-  </div>
-  <div>
-    <label>Author:</label>
-    <input type="text" name="author" value="<%= @track && @track.author %>">
-  </div>
-  <div>
-    <label>Url:</label>
-    <input type="text" name="url" value="<%= @track && @track.url %>">
-  </div>
-  <div>
-    <input type="submit" value="Submit">
-  </div>
-</form>
+</div>

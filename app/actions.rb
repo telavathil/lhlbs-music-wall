@@ -14,10 +14,15 @@ get '/tracks/new' do
 end
 
 post '/tracks' do
+  #binding.pry
+  #create google link from song title
+  params[:url] = "https://play.google.com/store/search?q=#{params[:song_title].gsub(/\s/,'+')}&c=music"
+
   @track = Track.new(
   song_title: params[:song_title],
   author: params[:author],
-  url: params[:url]
+  url: params[:url],
+  user_id: params[:user_id]
   )
   if @track.save
     redirect 'tracks'
@@ -35,6 +40,10 @@ get '/signup' do
   erb:'signup/index'
 end
 
+get '/signin' do
+  erb:'signin/index'
+end
+
 # get '/signup/oops' do
 #
 #   erb:'signup/oops'
@@ -50,7 +59,18 @@ post '/signup' do
     redirect '/users'
   else
     # binding.pry
-    redirect 'signup'
+    redirect '/signup'
+  end
+end
+
+post '/signin' do
+  #binding.pry
+  if user = User.find_by(params[:id])
+    session[:user_id] = user.id
+    redirect '/'
+  else
+    @error = "Invalid User"
+    erb :'index'
   end
 end
 
@@ -60,11 +80,25 @@ get '/users' do
   @users = User.all
   erb:'users/index'
   else
-    redirect '/signup'
+    redirect '/signin'
   end
 end
 
 get '/logout' do
   session[:user_id] = nil
-  redirect '/signup'
+  redirect '/'
+end
+
+helpers do
+  def current_user
+    if session[:user_id]
+      # @current_user ||= User.find(session[:id])
+      return User.find(session[:user_id])
+    end
+  end
+
+  post '/vote_up_track' do
+    Upvote.create(user_id:session[:user_id],track_id: params[:track_id]) unless Upvote.find_by(track_id: params[:track_id], user_id: session[:user_id])
+    redirect 'tracks'
+  end
 end

@@ -1,0 +1,7 @@
+<strong>Some issues with your signup, please fix them:</strong>
+<ul>
+  <%# binding.pry %>
+  <% @users.errors.full_messages.each do |user| %>
+    <li><%= user %></li>
+  <% end %>
+</ul>

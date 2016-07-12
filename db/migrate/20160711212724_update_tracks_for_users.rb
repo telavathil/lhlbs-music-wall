@@ -1,5 +1,5 @@
 class UpdateTracksForUsers < ActiveRecord::Migration
-  def change
-    add_column :tracks, :user_id :references
+  change_table :tracks do |t|
+    t.references :user
   end
 end
